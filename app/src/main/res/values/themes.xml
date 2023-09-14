@@ -2,6 +2,13 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.SenulsAndroidLabs" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
+        <item name="colorPrimary">#59FF00</item>
+
+        <item name="colorSecondary">@color/my_secondary</item>
+
+        <item name="android:statusBarColor">@color/my_statusbar</item>
+
+        <item name="android:textColor">@color/my_text</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
