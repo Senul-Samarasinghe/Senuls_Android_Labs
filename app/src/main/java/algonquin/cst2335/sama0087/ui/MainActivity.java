@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +31,9 @@ import algonquin.cst2335.sama0087.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+    private EditText emailEditText;
+    private Button loginButton;
+    private SharedPreferences prefs;
     ActivityMainBinding variableBinding;
 
     ImageView imgView;
@@ -46,16 +50,32 @@ public class MainActivity extends AppCompatActivity {
         //imgView = findViewById(R.id.imageView);
        // sw = findViewById(R.id.spin_switch);
 
-        binding.loginButton.setOnClickListener( click->{
-            Intent newPage = new Intent(MainActivity.this,SecondActivity.class);
-            String userInput = binding.emailEditText.getText().toString();
-            newPage.putExtra( "EmailAddress", userInput );
-            newPage.putExtra( "Age", 23.450 );
-            startActivity(newPage);
+        emailEditText = findViewById(R.id.emailEditText);
+        loginButton = findViewById(R.id.loginButton);
+
+        // Initialize SharedPreferences
+        prefs = getSharedPreferences("MyData", MODE_PRIVATE);
+
+        // Load the saved email address and set it in the EditText
+        String emailAddress = prefs.getString("LoginName", "");
+        emailEditText.setText(emailAddress);
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Save the email address entered by the user
+                String enteredEmail = emailEditText.getText().toString();
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("LoginName", enteredEmail);
+                editor.apply();
+
+                // Start the SecondActivity
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                startActivity(intent);
+            }
         });
     }
-
-    @Override
+@Override
     protected void onStart() {
         super.onStart();
         Log.w( "MainActivity", "In onStart() - Loading Widgets" );

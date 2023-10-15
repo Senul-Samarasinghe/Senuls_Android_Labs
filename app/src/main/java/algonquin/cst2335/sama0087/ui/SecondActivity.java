@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -63,6 +65,8 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
+
+
         buttonPic = findViewById(R.id.buttonPic);
         imageView = findViewById(R.id.imageView);
 
@@ -93,6 +97,13 @@ public class SecondActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        File file = new File( getFilesDir(), "Picture.png");
+        if(file.exists())
+        {
+            Bitmap theImage = BitmapFactory.decodeFile(file.getAbsolutePath());
+            imageView.setImageBitmap( theImage );
+        }
 
         // Set a click listener for the buttonPic
         buttonPic.setOnClickListener(new View.OnClickListener() {
